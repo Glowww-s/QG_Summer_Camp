@@ -1,2 +1,2 @@
-# QG_Summer_Camp
-暑期培训
+# Weekly
+周记
