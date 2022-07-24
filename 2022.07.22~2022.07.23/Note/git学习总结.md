@@ -24,7 +24,7 @@
   3. 先有远程仓库：
      - 克隆仓库：`git clone <远程仓库的ssh密匙>`
 
-### 创建新分支
+### 创建临时分支
 
 - 查看分支：`git branch`
 
@@ -44,21 +44,12 @@
 
 ### 合并分支到主分支
 
-- 合并某分支到当前分支：`git merge <name>`
+- 合并某分支到当前分支（fast forward合并，历史无分支）：`git merge <name>`
+- 合并某分支到当前分支（普通模式合并，历史无分支）：`git merge --no-ff <name>`
 
-### 删除分支
+### 删除临时分支
 
 - 删除分支：`git branch -d <name>`
-
-### 拉取远程仓库
-
-- **覆盖问题：**
-
-  1. 先将本地代码放到暂存区：`git stash`
-
-  2. 将远程github（码云等）上面的代码拉取下来：`git pull origin <远程分支名>:<本地分支名>`
-
-  3. 将第一步暂存区的代码放回本地：`git stash pop`
 
 ### 更新远程仓库
 
@@ -67,6 +58,8 @@
 ## 一些其他命令
 
 - 查看状态：`git status`
+
+  查看远程库信息：`git remote -v`
 
 - **丢弃修改**
 
@@ -83,9 +76,22 @@
   - 查看操作记录【用来找到后一个版本的id】：`git reflog`
   - 切换版本：`git reset --hard HEAD^`
 
+- **推送失败则拉取远程分支**：
+
+  - 取远程分支与当前分支合并【直接取远程的最新版本】：git pull
+
+    【用git fetch + git merge实现更好更安全】
+
+  - 建立本地分支与远程分支的链接：`git branch --set-upstream-to <branch-name> origin/<branch-name>`
+
+  - **覆盖问题：**
+    1. 先将本地代码放到暂存区：`git stash`
+    2. 将远程github上面的代码拉取下来：`git pull origin <远程分支名>:<本地分支名>`
+    3. 将第一步暂存区的代码放回本地：`git stash pop`
+
 - **解决冲突**
 
-  分支各自有了新的提交，修改至一样再合并
+  合并分支时，分支各自有了新的提交，修改至一样重新提交即可
   
 - pull报错：Please enter a commit message to explain why this merge is necessary（本次提交时已有其他人提交过代码）
 
@@ -93,4 +99,16 @@
   2. 键盘输入‘esc’
   3. 键盘输入‘:wq’
   4. 键盘输入‘enter’，提交代码成功
+  
+- 复制某一相同修改：
 
+  `git cherry-pick <commit>`
+
+## 分支管理
+
+- master（稳定版本）
+- dev（测试版本）
+- bug
+- feature（新功能分支）
+
+bug 和 feature可以不推远程
